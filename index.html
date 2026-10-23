@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Data Analytics Portfolio</title>
+<style>
+  :root{
+    --bg:#0b1220; --panel:#121b2e; --panel2:#17233b; --line:#243251;
+    --text:#e8edf7; --muted:#9aa8c4; --accent:#2dd4bf; --accent2:#60a5fa;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  a{color:var(--accent);text-decoration:none}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+  /* NAV */
+  nav{position:sticky;top:0;z-index:50;background:rgba(11,18,32,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px}
+  nav .brand{font-weight:700;letter-spacing:.3px}
+  nav .brand span{color:var(--accent)}
+  nav ul{display:flex;gap:20px;list-style:none;font-size:.9rem}
+  nav ul a{color:var(--muted)} nav ul a:hover{color:var(--text)}
+
+  /* HERO */
+  header.hero{padding:90px 0 70px;border-bottom:1px solid var(--line);
+    background:radial-gradient(900px 400px at 80% -10%,rgba(45,212,191,.12),transparent),
+               radial-gradient(700px 400px at 0% 0%,rgba(96,165,250,.10),transparent)}
+  .hero h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.15;margin-bottom:14px}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero p.lead{color:var(--muted);max-width:680px;font-size:1.1rem;margin-bottom:26px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+  .chip{font-size:.78rem;padding:4px 12px;border:1px solid var(--line);border-radius:999px;color:var(--muted);background:var(--panel)}
+  .btns{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:10px 20px;border-radius:8px;font-weight:600;font-size:.92rem}
+  .btn.primary{background:var(--accent);color:#06201c}
+  .btn.ghost{border:1px solid var(--line);color:var(--text)}
+  .btn:hover{opacity:.88}
+
+  /* SECTIONS */
+  section.block{padding:70px 0;border-bottom:1px solid var(--line)}
+  .sec-title{font-size:1.7rem;margin-bottom:8px}
+  .sec-sub{color:var(--muted);margin-bottom:34px}
+
+  /* INDEX GRID */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:.2s;display:block;color:inherit}
+  .card:hover{transform:translateY(-3px);border-color:var(--accent)}
+  .card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--panel2)}
+  .card .body{padding:14px 16px}
+  .card h3{font-size:1rem;margin-bottom:4px}
+  .card p{font-size:.85rem;color:var(--muted);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+
+  /* PROJECT */
+  .project{padding:70px 0;border-bottom:1px solid var(--line)}
+  .project:nth-child(even){background:rgba(255,255,255,.015)}
+  .p-head{margin-bottom:30px}
+  .p-num{color:var(--accent);font-weight:700;font-size:.85rem;letter-spacing:2px;text-transform:uppercase}
+  .p-head h2{font-size:1.9rem;margin:4px 0 8px}
+  .p-head .tagline{color:var(--muted);max-width:760px}
+  .award{display:inline-flex;align-items:center;gap:10px;margin-top:16px;padding:10px 16px;border-radius:10px;border:1px solid rgba(251,191,36,.45);background:linear-gradient(90deg,rgba(251,191,36,.18),rgba(251,191,36,.05));color:#fde68a;font-weight:600;font-size:.95rem}
+  .award .trophy{font-size:1.3rem;line-height:1}
+  .card .award-tag{display:inline-block;margin-top:8px;font-size:.74rem;font-weight:600;color:#fde68a;background:rgba(251,191,36,.14);border:1px solid rgba(251,191,36,.4);border-radius:999px;padding:2px 10px}
+  .tools{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .tools .chip{color:var(--accent2);border-color:rgba(96,165,250,.35)}
+
+  .p-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:start}
+  @media(max-width:900px){.p-grid{grid-template-columns:1fr}nav ul{display:none}}
+  .box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px 24px;margin-bottom:18px}
+  .box h4{font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+  .box p{color:#cfd8ea;font-size:.96rem}
+  .box ul{padding-left:18px;color:#cfd8ea;font-size:.95rem}
+  .box li{margin-bottom:6px}
+
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:18px}
+  .kpi{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px;text-align:center}
+  .kpi b{display:block;font-size:1.4rem;color:var(--accent)}
+  .kpi span{font-size:.78rem;color:var(--muted)}
+
+  video{width:100%;border-radius:12px;border:1px solid var(--line);background:#000;display:block}
+  .vlabel{font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:0 0 8px}
+  .shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:18px}
+  .shots img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;background:var(--panel2);transition:.2s}
+  .shots img:hover{border-color:var(--accent)}
+  .main-shot{width:100%;border-radius:12px;border:1px solid var(--line);cursor:zoom-in;margin-bottom:18px;display:block;background:var(--panel2)}
+
+  /* ABOUT / CONTACT */
+  .about{display:grid;grid-template-columns:2fr 1fr;gap:34px}
+  @media(max-width:900px){.about{grid-template-columns:1fr}}
+  .about p{color:#cfd8ea;margin-bottom:12px}
+  .skills .row{margin-bottom:12px}
+  .skills .row label{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);margin-bottom:4px}
+  .bar{height:6px;background:var(--panel2);border-radius:99px;overflow:hidden}
+  .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+
+  footer{padding:40px 0;text-align:center;color:var(--muted);font-size:.85rem}
+
+  /* LIGHTBOX */
+  #lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);display:none;align-items:center;justify-content:center;z-index:100;cursor:zoom-out;padding:24px}
+  #lightbox.open{display:flex}
+  #lightbox img{max-width:100%;max-height:100%;border-radius:8px}
+</style>
+</head>
+<body>
+
+<!-- =====================================================================
+     ✏️  EDIT EVERYTHING HERE — the page below builds itself from this block
+     ===================================================================== -->
+<script>
+const PROFILE = {
+  name: "Neil Clerigo",
+  title: "Data Analyst · Power BI Developer",
+  headline: "I turn messy data into dashboards that drive decisions.",
+  intro: "I design end-to-end analytics solutions — from data cleaning and modelling to interactive dashboards and clear business narratives.",
+  skills: ["Power BI", "DAX", "SQL Server", "Power Query", "Excel", "Data Modelling"],
+  about: [
+    "Write 2–3 short sentences about your background and what kind of problems you enjoy solving.",
+    "Mention industries you have worked in, and what clients can expect when working with you."
+  ],
+  skillLevels: [            // name, percent (0-100)
+    ["Power BI / DAX", 90],
+    ["SQL (SQL Server)", 85],
+    ["Power Query", 90],
+    ["Excel", 90]
+  ],
+  email: "clerigonoriel@gmail.com",
+  linkedin: "https://www.linkedin.com/in/neilclerigo",
+  github: "https://github.com/your-username",
+  cv: ""                    // e.g. "files/YourName-CV.pdf" (leave "" to hide the button)
+};
+
+/* ---------------------------------------------------------------
+   PROJECTS — copy / paste / delete blocks as needed.
+   Put your files in these folders next to index.html:
+       videos/   ← your .mp4 files
+       images/   ← your screenshots (.png / .jpg)
+   Then just type the path, e.g.  video: "videos/sales-dashboard.mp4"
+   You can also paste a full web link (https://...) instead.
+   --------------------------------------------------------------- */
+const PROJECTS = [
+  {
+    id: "project-1",
+    title: "Cohort Analysis Dashboard",
+    tagline: "This kind of cohort analysis is especially useful for tracking customer retention, churn, repeat purchases, and customer behaviour in e-commerce, marketing, and other subscription or repeat-purchase businesses..",
+    tools: ["Power BI", "DAX", "SQL Server"],
+    cover: "images/cohort.jpg",            // thumbnail on the project grid
+    screenshots: ["images/cohort.jpg", "images/cohort2.jpg", "images/cohort3.jpg"],
+    video: "videos/cohortvid.mp4",              // ← paste your mp4 location here
+    videoPoster: "",                           // optional preview image for the video
+       problem: "Is the business retaining its customers, or are customers leaving after their first purchase?",
+    narrative: "Cohort analysis helps a business determine whether its challenge is simply acquiring enough customers or retaining the customers it already has. The Power BI dashboard turns customer purchasing history into evidence that can guide retention strategies and improve long-term revenue..",
+    insights: ["Retention drops sharply after the first purchase", "Some cohorts retain customers better", "Revenue declines as cohorts age", "Newer cohorts retain customers better", "Most cohorts lose customers at the same stage"]
+  },
+  {
+    id: "project-2",
+    title: "Hospital ER Dashboard",
+    tagline: "Tracks total ER visits, admission rate, average waiting time, and patient satisfaction to provide a quick view of operational performance.",
+    award: "Won 4th Place in DSA x DAPH National Data Analytics Challenge",
+    tools: ["Power BI", "DAX"],
+    cover: "images/ER_Dash.jpg",
+    screenshots: ["images/ER_Dash.jpg", "images/ER_Dash_Monthly.jpg" , "images/ER_Dash_yr.jpg"],
+    video: "videos/ER_Dash.mp4",
+    videoPoster: "",
+      
+    problem: "The Emergency Department experiences continuous patient demand, making it challenging for hospital management to monitor operational performance and respond quickly to changing conditions. Without a centralized reporting solution, identifying trends in patient volume, wait times, admissions, referrals, and patient satisfaction becomes difficult — limiting the ability to optimize resources and improve patient care.",
+
+    narrative: "How can hospital management use Emergency Department data to monitor operational performance, identify bottlenecks, optimize resource allocation, and improve patient care through both strategic and day-to-day decision-making?",
+    insights: ["Strategic & Operational Reporting","KPI Monitoring & Month-over-Month Comparison", "Patient Flow & Disposition Analysis","Peak Demand & Heatmap Analysis","Patient Demographic & Referral Segmentation","Data-Driven Operational" ,"Recommendations"]
+	},
+  {
+    id: "project-3",
+    title: "Plant Co Executive Dashboard -(Case Study)",
+    tagline: "This Dashboard addresses this challenge by consolidating key performance indicators and enabling management to compare performance across time periods, product categories, individual products, and countries to support data-driven business decisions..",
+    tools: ["Power BI", "SQL"],
+    cover: "images/PlantCo_6.jpg",
+    screenshots: ["images/PlantCo_6.jpg", "images/PlantCo_5.jpg", "images/PlantCo.jpg"],
+    video: "videos/Plant_co.mp4",
+    videoPoster: "",
+    problem: "The company needs a consolidated view of its sales and financial performance to understand revenue growth, gross profit, profit margins, and product and geographic contributions. Without an interactive performance dashboard, management may struggle to identify underperforming product categories, evaluate year-over-year performance, and recognize risks associated with relying heavily on a single market..",
+    narrative: "Strong sales growth +74.7%, Year-over-year revenue growth. Revenue growth indicates increased sales activity and stronger business performance. Higher gross profit +73.6%, Year-over-year gross profit growth, Gross profit increased substantially, although management should assess whether profit growth keeps pace with revenue growth. Increased sales volume +77.7% Year-over-year units sold growth. The increase in units sold suggests that higher sales volume is an important contributor to overall growth. Profitability requires attention 39.77% Gross margin reported in the dashboard narrative Despite higher revenue and gross profit, the reported margin declined slightly. Management should investigate product costs, product mix, and pricing to protect profitability.",
+    insights: ["Executive KPI monitoring", "Sales and profitability trends", "Product and category analysis", "Geographic performance analysis"]
+  },
+  {
+    id: "project-4",
+    title: "Hotel Customer & Sales Analysis - (Case Study)",
+    tagline: "This Dashboard presents a comprehensive performance and operational analysis of the hotel portfolio (2018–2020).",
+    tools: ["Power BI", "DAX", "SQL Server"],
+    cover: "images/Hotel.jpg",
+    screenshots: ["images/Hotel.jpg", "images/Q&A_1.jpg", "images/Q&A_2.jpg", "images/Q&A_3.jpg"],
+    video: "videos/Hotel_Analysis.mp4",
+    videoPoster: "",
+    problem: "The client's primary objective is to create a Power BI dashboard that evaluates yearly revenue growth split by property type (City vs. Resort Hotel), assesses guest vehicle trends to determine if parking lot expansion is needed, and analyzes seasonality patterns using Average Daily Rate (ADR) and guest volume.",
+    narrative: "See Screenshots for Findings and outcome of the Analysis",
+    insights: ["Executive KPI Cards: Displays $35M Revenue, 486K Nights Booked, $96.3 Avg Monthly Rate, and 25% Avg Discount."  , "Slicers: Interactive filters for Year, Hotel Type, Country, and Market Type.", "Revenue Visuals", "Parking Analysis Tools: Structured matrix table and donut chart analyzing parking request rates and guest demand to evaluate facility expansion."]
+  },
+  {
+    id: "project-5",
+    title: "Daily Grind Sales Pricing Dashboard - (Case Study)",
+    tagline: "The Daily Grind Sales Pricing Dashboard is an end-to-end data analysis project (covering 2023–2025) designed to address a decline in profit margins caused by rising Cost of Goods Sold (COGS), tariffs, and other cost pressures.",
+    tools: ["Power BI", "Power Query", "Sql Server"],
+    cover: "images/Coffee2.jpg",
+    screenshots: ["images/Coffee1.jpg", "images/Coffee2.jpg", "images/G1.jpg", "images/g2.jpg", "images/g3.jpg", "images/g4.jpg" , "images/g5.jpg"],
+    video: "videos/Daily_Grind.mp4",
+    videoPoster: "",
+    problem: "The Challenge: The Director of Operations flagged a sustained decline in portfolio profit margins due to rising Cost of Goods Sold (COGS), tariffs, and other cost pressures.",
+    narrative: "Please See the Images Screenshots",
+    insights: ["Executive KPI Cards: Top-level metric scorecards displaying Total Sales ($871K), Average Sales ($197), Total Profit ($495K), Total Customers (4,432), Overall GP % (56.88%), and Total Quantity (11K)." , "Category Breakdown Donut Chart: Visualizes product category distribution across Grinders & Brewers, Subscriptions, Accessories, Merchandise, and Consumables. ", "Year-Quarter-Region Revenue Matrix: A multi-layered data table tracking revenue performance across years, quarters, and regions (East, North, South, West).  ", "Regional Weekly Trend Line Chart: Tracks weekly sales performance and seasonality trends broken down by region."]
+  },
+  {
+    id: "project-6",
+    title: "Project Analysis",
+    tagline: "Identifying Which Departments and Projects Are at Risk of Going Over Budget or Underperforming.",
+    tools: ["Power BI", "DAX"],
+    cover: "images/Proj_Analysis.jpg",
+    screenshots: ["images/Proj_Analysis.jpg","images/Proj1.jpg", "images/Proj2.jpg", "images/Proj3.jpg"],
+    video: "videos/Proj_Analysis.mp4",
+    videoPoster: "",
+    problem: "Which projects and departments are at risk of being over budget or underperforming? Department budgets are set at 2-year intervals — we want to know if a single year can cover all expenses..",
+    narrative: "Please Refer to Images/ScreenShots",
+    insights: ["Executive Profile & Employee Search", " Top-Level KPI Metrics & Donut Charts", "Project Distribution & Status Visuals", "Department Budget & Risk Matrix Table ", "Project & Department Budget Breakdown Bar Charts"] 
+
+  },
+  {
+    id: "project-7",
+    title: "Sales Performance and Customers",
+    tagline: "This dashboards using power bi to help stakeholders, including sales managers and executive to analyze sales performance and customers.",
+    tools: ["Power BI", "SQL Server"],
+    cover: "images/Sales_Practice.jpg",
+    screenshots: ["images/Sales_Practice2.jpg", "images/Sales_Practice2.jpg"],
+    video: "videos/Sales_Performance.mp4",
+    videoPoster: "",
+    problem: "The purpose of sales dashboard is to present an overview of the sales metrics and trends in order to analyze year-over-year sales performance and understand sales trends..",
+    narrative: "KPI Overview, ‍Product Subcategory.  Display a summary of total sales, profits and quantity for the current year and the previous year. KPI Overview -Display a summary of total number of customers , total sales per customer and total number of orders for the current year and the previous year. Customer Trends– Present the data for each KPI on a monthly basis for both the current year and the previous year. Identify months with highest and lowest sales and make them easy to recognize. Customer Distribution by Number of Orders Top 10 Customers By Profit",
+    insights: ["Insight one", "Insight two", "Insight three"]
+  },
+   {
+    id: "project-8",
+    title: "Bike Shop Sales Performance",
+    tagline: "One-line summary.",
+    tools: ["Power BI", "DAX"],
+    cover: "images/Bike.jpg",
+    screenshots: ["images/Bike2.jpg", "images/Bike.jpg"],
+    video: "videos/Bike.mp4",
+    videoPoster: "",
+    kpis: [["--", "KPI label"], ["--", "KPI label"], ["--", "KPI label"]],
+    problem: "KPI Overview, ‍Product Subcategory Display a summary of total sales, profits and quantity for the current year and the previous year. KPI Overview -Display a summary of total number of customers , total sales per customer and total number of orders for the current year and the previous year. Customer Trends– Present the data for each KPI on a monthly basis for both the current year and the previous year. Identify months with highest and lowest sales and make them easy to recognize. Customer Distribution by Number of Orders. Top 10 Customers By Profit.",
+    narrative: "Analysis narrative here.",
+    insights: 
+
+
+
+["Hourly Revenue Analysis: Track revenue generation across hours of the day to identify peak usage times.", "Profit and Revenue Trends: Analyze multi-period financial trajectory across revenue and net profit.", "Seasonal Revenue: Map demand curves and revenue across seasons (Spring, Summer, Fall, Winter). ", " Rider Demographics: Segment rider activity between Casual riders and Registered members." ]   
+  }
+];
+</script>
+<!-- ===================== END OF EDIT AREA ===================== -->
+
+
+<nav>
+  <div class="wrap">
+    <div class="brand" id="navBrand"></div>
+    <ul>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="p-num" id="heroTitle"></p>
+    <h1 id="heroHeadline"></h1>
+    <p class="lead" id="heroIntro"></p>
+    <div class="chips" id="heroSkills"></div>
+    <div class="btns">
+      <a class="btn primary" href="#projects">View Projects</a>
+      <a class="btn ghost" href="#contact">Get in Touch</a>
+    </div>
+  </div>
+</header>
+
+<section class="block" id="projects">
+  <div class="wrap">
+    <h2 class="sec-title">Dashboard Projects</h2>
+    <p class="sec-sub">Select a project to jump to the full case study.</p>
+    <div class="grid" id="projectGrid"></div>
+  </div>
+</section>
+
+<div id="projectList"></div>
+
+<section class="block" id="about">
+  <div class="wrap">
+    <h2 class="sec-title">About Me</h2>
+    <p class="sec-sub">&nbsp;</p>
+    <div class="about">
+      <div id="aboutText"></div>
+      <div class="skills" id="skillBars"></div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="contact">
+  <div class="wrap" style="text-align:center">
+    <h2 class="sec-title">Let's Work Together</h2>
+    <p class="sec-sub">Have a data problem or a dashboard idea? Let's talk.</p>
+    <div class="btns" style="justify-content:center" id="contactBtns"></div>
+  </div>
+</section>
+
+<footer><div class="wrap" id="footer"></div></footer>
+
+<div id="lightbox"><img alt=""></div>
+
+<script>
+// ---------- Helpers ----------
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const PLACEHOLDER = "data:image/svg+xml;utf8," + encodeURIComponent(
+  `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='450'><rect width='100%' height='100%' fill='#17233b'/><text x='50%' y='50%' fill='#9aa8c4' font-family='Arial' font-size='22' text-anchor='middle'>Add screenshot path</text></svg>`);
+const imgTag = (src, cls = "", extra = "") =>
+  `<img ${cls ? `class="${cls}"` : ""} src="${esc(src)}" loading="lazy" ${extra} onerror="this.onerror=null;this.src='${PLACEHOLDER}'">`;
+
+// ---------- Profile ----------
+document.title = `${PROFILE.name} | Data Analytics Portfolio`;
+$("navBrand").innerHTML = `${esc(PROFILE.name.split(" ")[0])}<span>.</span>${esc(PROFILE.name.split(" ").slice(1).join(" "))}`;
+$("heroTitle").textContent = PROFILE.title;
+$("heroHeadline").textContent = PROFILE.headline;
+$("heroIntro").textContent = PROFILE.intro;
+$("heroSkills").innerHTML = PROFILE.skills.map(s => `<span class="chip">${esc(s)}</span>`).join("");
+$("aboutText").innerHTML = PROFILE.about.map(p => `<p>${esc(p)}</p>`).join("");
+$("skillBars").innerHTML = PROFILE.skillLevels.map(([n, v]) =>
+  `<div class="row"><label><span>${esc(n)}</span><span>${v}%</span></label><div class="bar"><i style="width:${v}%"></i></div></div>`).join("");
+$("contactBtns").innerHTML =
+  (PROFILE.email ? `<a class="btn primary" href="mailto:${esc(PROFILE.email)}">Email Me</a>` : "clerigonoriel@gmail.com") +
+  (PROFILE.linkedin ? `<a class="btn ghost" href="${esc(PROFILE.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>` : "") +
+  (PROFILE.github ? `<a class="btn ghost" href="${esc(PROFILE.github)}" target="_blank" rel="noopener">GitHub</a>` : "") +
+  (PROFILE.cv ? `<a class="btn ghost" href="${esc(PROFILE.cv)}" target="_blank" rel="noopener">Download CV</a>` : "");
+$("footer").textContent = `© ${new Date().getFullYear()} ${PROFILE.name}. All rights reserved.`;
+
+// ---------- Project grid ----------
+$("projectGrid").innerHTML = PROJECTS.map((p, i) => `
+  <a class="card" href="#${esc(p.id)}">
+    ${imgTag(p.cover || (p.screenshots && p.screenshots[0]) || "")}
+    <div class="body"><h3>${String(i + 1).padStart(2, "0")} · ${esc(p.title)}</h3><p>${esc(p.tagline)}</p>${p.award ? `<span class="award-tag">🏆 ${esc(p.award)}</span>` : ""}</div>
+  </a>`).join("");
+
+// ---------- Project sections ----------
+$("projectList").innerHTML = PROJECTS.map((p, i) => {
+  const shots = p.screenshots || [];
+  const main = shots[0];
+  const rest = shots.slice(1);
+  return `
+  <section class="project" id="${esc(p.id)}">
+    <div class="wrap">
+      <div class="p-head">
+        <div class="p-num">Project ${String(i + 1).padStart(2, "0")}</div>
+        <h2>${esc(p.title)}</h2>
+        <p class="tagline">${esc(p.tagline)}</p>
+           ${p.award ? `<div class="award"><span class="trophy">🏆</span><span>${esc(p.award)}</span></div>` : ""}
+        <div class="tools">${(p.tools || []).map(t => `<span class="chip">${esc(t)}</span>`).join("")}</div>
+      </div>
+
+      <div class="p-grid">
+        <div>
+          ${p.kpis && p.kpis.length ? `<div class="kpis">${p.kpis.map(k => `<div class="kpi"><b>${esc(k[0])}</b><span>${esc(k[1])}</span></div>`).join("")}</div>` : ""}
+          <div class="box"><h4>Business Problem</h4><p>${esc(p.problem)}</p></div>
+          <div class="box"><h4>Key Question Addressed</h4><p>${esc(p.narrative)}</p></div>
+          ${p.insights && p.insights.length ? `<div class="box"><h4>Dashboard Outcome and Features</h4><ul>${p.insights.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>` : ""}
+		  </div>
+
+        <div>
+          ${main ? imgTag(main, "main-shot", `data-zoom="1"`) : ""}
+          ${p.video ? `
+            <p class="vlabel">Dashboard Walkthrough</p>
+            <video controls preload="metadata" ${p.videoPoster ? `poster="${esc(p.videoPoster)}"` : ""}>
+              <source src="${esc(p.video)}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>` : ""}
+          ${rest.length ? `<div class="shots">${rest.map(s => imgTag(s, "", `data-zoom="1"`)).join("")}</div>` : ""}
+        </div>
+      </div>
+    </div>
+  </section>`;
+}).join("");
+
+// ---------- Lightbox ----------
+const lb = $("lightbox"), lbImg = lb.querySelector("img");
+document.addEventListener("click", (e) => {
+  const t = e.target;
+  if (t.matches && t.matches("img[data-zoom]") && t.src !== PLACEHOLDER) {
+    lbImg.src = t.src; lb.classList.add("open");
+  } else if (lb.classList.contains("open")) {
+    lb.classList.remove("open");
+  }
+});
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") lb.classList.remove("open"); });
+</script>
+</body>
+</html>
